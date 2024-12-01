@@ -11,12 +11,10 @@ fun main() {
         leftSide.sort()
         rightSide.sort()
 
-        var totalDistance = 0
-        for (index in leftSide.indices) {
-            val (smaller, bigger) = minMax(leftSide[index], rightSide[index])
-            totalDistance += bigger - smaller
+        return leftSide.sumOfIndexed { index, left ->
+            val (smaller, bigger) = minMax(left, rightSide[index])
+            bigger - smaller
         }
-        return totalDistance
     }
 
     fun part2(sides: List<Pair<Int, Int>>): Int {

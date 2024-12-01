@@ -20,3 +20,15 @@ fun readInput(name: String) = Path("./input/$name.txt").readText().trim().lines(
 fun minMax(a: Int, b: Int): Pair<Int, Int> {
     return min(a, b) to max(a, b)
 }
+
+/**
+ * Love child of forEachIndexed and sumOf
+ */
+inline fun <T> Iterable<T>.sumOfIndexed(selector: (Int, T) -> Int): Int {
+    var index = 0
+    var sum = 0
+    for (element in this) {
+        sum += selector(index++, element)
+    }
+    return sum
+}
