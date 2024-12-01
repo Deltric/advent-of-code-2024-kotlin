@@ -1,21 +1,47 @@
+import kotlin.math.max
+import kotlin.math.min
+
 fun main() {
     fun part1(input: List<String>): Int {
-        return input.size
+        val leftSide = mutableListOf<Int>()
+        val rightSide = mutableListOf<Int>()
+
+        input.map { it.split("   ") }
+            .forEach {
+                leftSide.add(it[0].toInt())
+                rightSide.add(it[1].toInt())
+            }
+
+        leftSide.sort()
+        rightSide.sort()
+
+        var totalDistance = 0
+        for (index in leftSide.indices) {
+            val smallerNumber = min(leftSide[index], rightSide[index])
+            val biggerNumber = max(leftSide[index], rightSide[index])
+            totalDistance += biggerNumber - smallerNumber
+        }
+        return totalDistance
     }
 
     fun part2(input: List<String>): Int {
-        return input.size
+        val leftSide = mutableListOf<Int>()
+        val occurrences = mutableMapOf<Int, Int>()
+
+        input.map { it.split("   ") }
+            .forEach {
+                leftSide.add(it[0].toInt())
+                val rightNumber = it[1].toInt()
+                occurrences[rightNumber] = occurrences.getOrDefault(rightNumber, 0) + 1
+            }
+
+        return leftSide.sumOf { it * occurrences.getOrDefault(it, 0) }
     }
 
-    // Test if implementation meets criteria from the description, like:
-    check(part1(listOf("test_input")) == 1)
+    val dayOneInput = readDay(1)
+    val part1Result = part1(dayOneInput)
+    println("Total Distance: $part1Result")
 
-    // Or read a large test input from the `src/Day01_test.txt` file:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
-    // Read the input from the `src/Day01.txt` file.
-    val input = readInput("Day01")
-    part1(input).println()
-    part2(input).println()
+    val part2Result = part2(dayOneInput)
+    println("Similarity Score: $part2Result")
 }
