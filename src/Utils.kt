@@ -6,7 +6,13 @@ import kotlin.math.min
 /**
  * Shortcut for readInput that formats a day to file name for input.
  */
-fun readDay(day: Int) = readInput("Day${day.toString().padStart(2, '0')}")
+fun readDay(day: Int, sampleMode: Boolean = false): List<String> {
+    var fileName = "Day${day.toString().padStart(2, '0')}"
+    if (sampleMode) {
+        fileName = "${fileName}_Sample"
+    }
+    return readInput(fileName)
+}
 
 /**
  * Reads lines from the given input txt file.
